@@ -8,7 +8,7 @@ pipeline {
     }
     stage('build') {
       steps {
-        bat 'mvn test'
+        bat 'mvn install'
       }
     }
     stage('sonar') {
@@ -16,15 +16,21 @@ pipeline {
         bat 'mvn sonar:sonar'
       }
     }
-            stage('Ok') {
-            steps {
-                echo "Ok"
-            }
-        }
+    stage('Email-Notification') {
+      steps {
+        echo 'Ok'
+      }
     }
-   post {
+    stage('Deploy') {
+      steps {
+        bat 'REM'
+      }
+    }
+  }
+  post {
     always {
-        emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+      emailext(body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test')
+
     }
 
   }
