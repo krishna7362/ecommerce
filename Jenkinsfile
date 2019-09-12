@@ -16,5 +16,10 @@ pipeline {
         sh 'mvn test'
       }
     }
+     stage('install') {
+      steps {
+        sh 'mvn insatll'
+      }
+    }
   }
 }
